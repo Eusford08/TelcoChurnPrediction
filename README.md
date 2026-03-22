@@ -122,7 +122,6 @@ Although Logistic Regression achieved the highest ROC-AUC (0.846),
 
 * Dataset imbalance handled using SMOTE
 * Model may not generalize across all telecom providers
-* Some features may be correlated but not causal
 
 ---
 
@@ -161,7 +160,9 @@ TelcoChurnPrediction/
 ├── data/                   # Dataset
 ├── model/                  # Trained model (.pkl)
 ├── src/
+│   └── cleaning.py         # Data cleaning
 │   └── features.py         # Feature engineering
+│   └── preprocessing.py    # Feature preprocessing
 │
 ├── notebooks/              # EDA & experiments
 └── images/                 # Screenshots
