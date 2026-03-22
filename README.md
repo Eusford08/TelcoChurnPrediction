@@ -1,190 +1,202 @@
-# Telco Customer Churn Prediction (ML + Streamlit Dashboard)
-## 🔍 Overview
+# 📊 Telco Customer Churn Prediction (ML + Streamlit Dashboard)
 
-This project builds a **production-style machine learning pipeline** to predict customer churn using the Telco Customer Churn dataset.
+## 📌 Problem Statement
 
-It demonstrates a **complete ML workflow**, including:
+Customer churn is a major challenge in the telecom industry.
+Acquiring new customers is significantly more expensive than retaining existing ones.
 
-* Data Cleaning & Feature Engineering
-* Exploratory Data Analysis (EDA)
-* Pipeline-based Preprocessing
-* Model Training & Hyperparameter Tuning
-* Model Evaluation (CV + Test Set)
-* Feature Importance Analysis
-* Deployment using Streamlit
+This project aims to **predict customer churn probability**, enabling businesses to take **proactive retention actions** and reduce revenue loss.
 
-![Dashboard](images/dashboard.png)
 ---
 
 ## 🎯 Objective
 
-Predict whether a customer will **churn (leave the service)**.
-
-### Business Context:
-
-* Churn prediction helps companies **retain customers**
-* Focus is on **Recall** → minimizing missed churn cases (false negatives)
+* Build a machine learning model to predict customer churn
+* Identify key factors influencing churn behavior
+* Deploy an interactive dashboard for real-time prediction
 
 ---
 
-## ⚙️ Workflow
+## 🧠 Machine Learning Approach
 
-### 1. Data Cleaning
-
-Performed using `src/cleaning.py`:
-
-* Converted `TotalCharges` to numeric
-* Dropped irrelevant column (`customerID`)
-* Encoded target variable (`Churn`)
-
----
-
-### 2. Feature Engineering
-
-Implemented inside pipeline (`src/features.py`):
-
-```python
-AvgCharges = TotalCharges / (tenure + 1)
-```
-
-This ensures:
-
-* No data leakage
-* Consistent transformation during training and inference
-
----
-
-### 3. Preprocessing Pipeline
-
-Using `ColumnTransformer`:
-
-* **Numerical Features**
-
-  * Imputation (median)
-  * StandardScaler
-
-* **Categorical Features**
-
-  * Imputation (most frequent)
-  * OneHotEncoder
-
-All transformations are done inside pipeline to ensure:
-* ✅ Leakage-safe training
-* ✅ Reproducibility
-* ✅ Deployment consistency
-
----
-
-### 4. Model Training & Tuning
-
-Models used:
+### Models Evaluated
 
 * Logistic Regression
 * Decision Tree
 * Random Forest
-* KNN
-* SVM
-* XGBoost (final selected model)
-
-Hyperparameter tuning performed using:
-
-* `GridSearchCV`
-* `StratifiedKFold (5-fold)`
+* K-Nearest Neighbors (KNN)
+* Support Vector Machine (SVM)
+* XGBoost ✅ *(Final Selected Model)*
 
 ---
 
-### 5. Evaluation Metrics
+## 📊 Model Comparison (After Hyperparameter Tuning)
 
-Primary metric:
-
-* **Recall** → prioritize detecting churn
-
-Additional metrics:
-
-* F1 Score
-* ROC-AUC
-* Accuracy
-
----
-
-### 6. Model Selection
-
-Models compared based on:
-
-* Cross-validation mean score
-* Standard deviation (stability)
-* Test set performance
+| Model               | CV Score | CV Std | Recall    | ROC-AUC   |
+| ------------------- | -------- | ------ | --------- | --------- |
+| XGBoost ✅           | 0.946    | 0.0127 | **0.947** | 0.837     |
+| SVM                 | 0.835    | 0.0191 | 0.821     | 0.823     |
+| Random Forest       | 0.810    | 0.0241 | 0.799     | 0.840     |
+| Logistic Regression | 0.799    | 0.0368 | 0.783     | **0.846** |
+| Decision Tree       | 0.773    | 0.0252 | 0.759     | 0.831     |
+| KNN                 | 0.559    | 0.0107 | 0.575     | 0.813     |
 
 ---
 
-## 📊 Feature Importance
+### 🧠 Model Selection Rationale
 
-Feature importance extracted from XGBoost model.
+Although Logistic Regression achieved the highest ROC-AUC (0.846),
+**XGBoost was selected as the final model** because:
 
-### Top Features:
+* It achieved the **highest Recall (0.947)** → critical for detecting churn customers
+* It delivered the **best cross-validation score (0.946)**
+* It showed **low variance (CV std = 0.0127)** → stable performance
 
-* **Contract Type**
-* **Internet Service**
-* **Tech Support**
-* **Online Security**
-* **Monthly Charges**
-
-Grouped importance was used to aggregate OneHotEncoded features back to original variables for better interpretability.
-
-![Dashboard](images/feature_importance.png)
+> 🎯 In churn prediction, **Recall is prioritized over ROC-AUC**,
+> because missing a churn customer (false negative) has a higher business cost.
 
 ---
 
-## 📈 Results
+## 📈 Key Insights
 
-| Metric    | Value |
-| --------- |-------|
-| Recall    | 0.997 |
-| ROC-AUC   | 0.837 |
-| Stability | 0.013 |
-
-*(Exact values depend on training run)*
+* 📉 **Month-to-month contracts** have the highest churn rate
+* 💰 **Higher monthly charges** increase churn probability
+* ⏳ **Low tenure customers** are more likely to churn
+* 🛠️ Lack of **tech support / online security** increases churn risk
 
 ---
 
-## 🚀 Deployment
+## 🖥️ Streamlit App Features
 
-A Streamlit app (`app.py`) is provided for interactive predictions.
+### 📊 Dashboard
 
-![Dashboard](images/prediction.png)
+* Customer overview with KPI metrics
+* Interactive filters (contract, tenure)
+* Visual insights (tenure distribution, charges vs churn)
 
-### Run locally:
+### 🤖 Prediction System
+
+* Manual customer input form
+* Real-time churn prediction
+* Probability score with risk interpretation
+
+### 📊 Explainability
+
+* Feature importance visualization
+* Grouped feature insights (business-level interpretation)
+
+### 📂 Batch Prediction
+
+* Upload CSV file
+* Predict churn for multiple customers
+* Download results
+
+---
+
+## 📷 Screenshots
+
+### 📊 Dashboard
+
+![Dashboard](images/dashboard.png)
+
+### 🤖 Prediction Page
+
+![Prediction](images/prediction.png)
+
+### 📊 Feature Importance
+
+![Feature Importance](images/feature_importance.png)
+
+---
+
+## 💼 Business Impact
+
+* Enables **early identification of at-risk customers**
+* Supports **targeted retention strategies**
+* Reduces **customer acquisition costs**
+* Improves **Customer Lifetime Value (CLV)**
+
+---
+
+## ⚠️ Limitations
+
+* Dataset imbalance handled using SMOTE
+* Model may not generalize across all telecom providers
+* Some features may be correlated but not causal
+
+---
+
+## 🚀 How to Run the Project
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/Eusford08/TelcoChurnPrediction.git
+cd TelcoChurnPrediction
+```
+
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
+
+### 3. Run Streamlit App
+
+```bash
 streamlit run app.py
 ```
 
 ---
 
-## 🧠 Key Learnings
+## 📂 Project Structure
 
-* Pipelines are critical to prevent **data leakage**
-* Recall is more important than accuracy in churn problems
-* Hyperparameter tuning significantly improves performance
-* Proper project structure is essential for real-world ML systems
+```
+TelcoChurnPrediction/
+│
+├── app.py                  # Streamlit app
+├── requirements.txt
+├── README.md
+│
+├── data/                   # Dataset
+├── model/                  # Trained model (.pkl)
+├── src/
+│   └── features.py         # Feature engineering
+│
+├── notebooks/              # EDA & experiments
+└── images/                 # Screenshots
+```
 
 ---
 
-## 🛠️ Tech Stack
+## 🔧 Tech Stack
 
 * Python
-* Pandas, NumPy
+* Pandas / NumPy
 * Scikit-learn
+* Imbalanced-learn (SMOTE)
 * XGBoost
-* Imbalanced-learn
-* Matplotlib, Seaborn
+* Plotly
 * Streamlit
 
 ---
 
-## 📬 Author
+## 📌 Future Improvements
 
-Built as part of a **Data Science portfolio project** demonstrating end-to-end ML workflow.
+* Add SHAP explainability for local predictions
+* Hyperparameter tuning with advanced search
+* Deploy to Streamlit Cloud / Render
+* Build REST API using FastAPI
 
-Feel free to explore, fork, and improve 🚀
+---
+
+## 👤 Author
+
+**Jackson Lee**
+Aspiring Data Scientist | Machine Learning Practitioner
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub!
