@@ -1,5 +1,4 @@
-# 📊 Telco Customer Churn Prediction (End-to-End Machine Learning Project)
-
+# Telco Customer Churn Prediction (ML + Streamlit Dashboard)
 ## 🔍 Overview
 
 This project builds a **production-style machine learning pipeline** to predict customer churn using the Telco Customer Churn dataset.
@@ -14,6 +13,7 @@ It demonstrates a **complete ML workflow**, including:
 * Feature Importance Analysis
 * Deployment using Streamlit
 
+![Dashboard](images/dashboard.png)
 ---
 
 ## 🎯 Objective
@@ -84,7 +84,7 @@ Models used:
 * Random Forest
 * KNN
 * SVM
-* XGBoost
+* XGBoost (final selected model)
 
 Hyperparameter tuning performed using:
 
@@ -131,6 +131,8 @@ Feature importance extracted from XGBoost model.
 
 Grouped importance was used to aggregate OneHotEncoded features back to original variables for better interpretability.
 
+![Dashboard](images/feature_importance.png)
+
 ---
 
 ## 📈 Results
@@ -148,6 +150,8 @@ Grouped importance was used to aggregate OneHotEncoded features back to original
 ## 🚀 Deployment
 
 A Streamlit app (`app.py`) is provided for interactive predictions.
+
+![Dashboard](images/prediction.png)
 
 ### Run locally:
 
