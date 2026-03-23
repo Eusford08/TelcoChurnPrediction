@@ -85,12 +85,6 @@ Although Logistic Regression achieved the highest ROC-AUC (0.846),
 * Feature importance visualization
 * Grouped feature insights (business-level interpretation)
 
-### 📂 Batch Prediction
-
-* Upload CSV file
-* Predict churn for multiple customers
-* Download results
-
 ---
 
 ## 📷 Screenshots
@@ -186,7 +180,7 @@ TelcoChurnPrediction/
 
 * Add SHAP explainability for local predictions
 * Hyperparameter tuning with advanced search
-* Deploy to Streamlit Cloud / Render
+
 * Build REST API using FastAPI
 
 ---
