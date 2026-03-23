@@ -252,31 +252,6 @@ with tab2:
 
         st.plotly_chart(fig, use_container_width=True)
 
-    # ========================
-    # BATCH PREDICTION
-    # ========================
-    st.divider()
-    st.subheader("📂 Batch Prediction")
-
-    uploaded_file = st.file_uploader("Upload CSV file")
-
-    if uploaded_file:
-        batch_df = pd.read_csv(uploaded_file)
-        batch_df = add_features(batch_df)
-
-        preds = model.predict(batch_df)
-        probs = model.predict_proba(batch_df)[:, 1]
-
-        batch_df["Prediction"] = preds
-        batch_df["Probability"] = probs
-
-        st.dataframe(batch_df.head())
-
-        st.download_button(
-            "⬇️ Download Predictions",
-            batch_df.to_csv(index=False),
-            "predictions.csv"
-        )
 
 # =========================================================
 # 📘 TAB 3 — ABOUT
