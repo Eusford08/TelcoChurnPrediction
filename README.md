@@ -31,7 +31,8 @@ This project aims to **predict customer churn probability**, enabling businesses
 ---
 
 ## 📊 Model Comparison (After Hyperparameter Tuning)
-
+> ⚖️ Model selection is based on Recall-first strategy due to the asymmetric cost of errors in churn prediction.
+> 
 | Model               | CV Score | CV Std | Recall    | ROC-AUC   |
 | ------------------- | -------- | ------ | --------- | --------- |
 | XGBoost ✅           | 0.946    | 0.0127 | **0.947** | 0.837     |
@@ -43,18 +44,26 @@ This project aims to **predict customer churn probability**, enabling businesses
 
 ---
 
-### 🧠 Model Selection Rationale
+## 🧠 Model Selection Rationale
 
-Although Logistic Regression achieved the highest ROC-AUC (0.846),
-**XGBoost was selected as the final model** because:
+Although Logistic Regression achieved the highest ROC-AUC (0.846),  
+**XGBoost was selected as the final model** due to its superior performance on business-critical metrics:
 
-* It achieved the **highest Recall (0.947)** → critical for detecting churn customers
-* It delivered the **best cross-validation score (0.946)**
-* It showed **low variance (CV std = 0.0127)** → stable performance
+- **Highest Recall (0.947)** → Ensures most churn customers are correctly identified  
+- **Best Cross-Validation Score (0.946)** → Strong overall performance across folds  
+- **Low Variance (CV std = 0.0127)** → Indicates stable and reliable predictions  
 
-> 🎯 In churn prediction, **Recall is prioritized over ROC-AUC**,
-> because missing a churn customer (false negative) has a higher business cost.
+---
 
+### 🎯 Business Perspective
+
+In churn prediction, **Recall is prioritized over ROC-AUC**, because:
+
+- Missing a churn customer (**false negative**) results in direct revenue loss  
+- Correctly identifying churn risk enables proactive retention strategies  
+
+> ✅ Therefore, the model selection prioritizes minimizing false negatives over maximizing overall accuracy.
+> 
 ---
 
 ## 📈 Key Insights
@@ -100,6 +109,10 @@ Although Logistic Regression achieved the highest ROC-AUC (0.846),
 ### 📊 Feature Importance
 
 ![Feature Importance](images/feature_importance.png)
+
+### 📊 ROC Curve
+
+![ROC Curve](images/roc_curve.png)
 
 ---
 
@@ -180,7 +193,6 @@ TelcoChurnPrediction/
 
 * Add SHAP explainability for local predictions
 * Hyperparameter tuning with advanced search
-
 * Build REST API using FastAPI
 
 ---
@@ -188,7 +200,7 @@ TelcoChurnPrediction/
 ## 👤 Author
 
 **Jackson Lee**
-Aspiring Data Scientist | Machine Learning Practitioner
+Data Science & Machine Learning Practitioner 
 
 ---
 
