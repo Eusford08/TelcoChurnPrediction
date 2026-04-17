@@ -294,7 +294,7 @@ with tab3:
 
         st.markdown("### ⚠️ Limitations")
         st.warning("""
-        - Imbalance handled with SMOTE  
+        - Dataset imbalance was addressed using cost-sensitive learning (class_weight), with earlier experimentation using SMOTE. Final model performance may vary depending on imbalance handling strategy
         - Limited generalization  
         """)
 

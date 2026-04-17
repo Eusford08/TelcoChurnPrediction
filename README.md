@@ -127,8 +127,8 @@ In churn prediction, **Recall is prioritized over ROC-AUC**, because:
 
 ## ⚠️ Limitations
 
-* Dataset imbalance handled using SMOTE
-* Model may not generalize across all telecom providers
+* Dataset imbalance was addressed using cost-sensitive learning (class_weight), with earlier experimentation using SMOTE. Final model performance may vary depending on imbalance handling strategy
+* Model may not generalize across all telco providers
 
 ---
 
